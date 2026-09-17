@@ -322,8 +322,66 @@ document.querySelectorAll('.nav-item').forEach(item => {
   });
 });
 
+/* ---------------------------- session ---------------------------- */
+
+/* Fill the header from the signed-in profile, keeping the existing
+   markup as the fallback so the page still reads correctly if the
+   profile is missing. */
+function renderSession() {
+  const user = window.Auth ? Auth.currentUser() : null;
+  if (!user) return;
+
+  const set = (id, text) => {
+    const node = document.getElementById(id);
+    if (node && text) node.textContent = text;
+  };
+
+  set('userName', user.name);
+  set('userPlan', user.plan);
+  set('userInitials', user.initials);
+  set('menuName', user.name);
+  set('menuEmail', user.email);
+
+  if (user.firstName) {
+    const h1 = document.querySelector('.greeting h1');
+    if (h1) h1.textContent = `Good morning, ${user.firstName}`;
+  }
+}
+
+// user menu open / close
+const userBtn = document.getElementById('userBtn');
+const userMenu = document.getElementById('userMenu');
+
+function setMenuOpen(open) {
+  userMenu.hidden = !open;
+  userBtn.setAttribute('aria-expanded', String(open));
+}
+
+userBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  setMenuOpen(userMenu.hidden);
+});
+
+document.addEventListener('click', e => {
+  if (!userMenu.hidden && !e.target.closest('.user-wrap')) setMenuOpen(false);
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !userMenu.hidden) {
+    setMenuOpen(false);
+    userBtn.focus();
+  }
+});
+
+// sign out
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  if (window.Auth) Auth.logout();
+  location.replace('login.html');
+});
+
 /* ---------------------------- boot ---------------------------- */
 
+renderSession();
 renderAreaChart('1Y');
 renderTransactions();
 renderDonut('30d');
