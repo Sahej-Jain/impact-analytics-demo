@@ -6,6 +6,11 @@
 <title>Banking and Finance Website</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f172a'/%3E%3Ctext x='16' y='23' font-size='18' font-family='serif' font-weight='700' fill='white' text-anchor='middle'%3E%C4%A6%3C/text%3E%3C/svg%3E" />
 <link rel="stylesheet" href="styles.css" />
+<script src="auth.js"></script>
+<script>
+  /* Route guard: bounce to the login page before anything paints. */
+  if (!window.Auth || !Auth.isAuthenticated()) location.replace('login.html');
+</script>
 </head>
 <body>
 <div class="app">
@@ -132,13 +137,35 @@
           <span class="badge">3</span>
         </button>
 
-        <div class="user">
-          <div class="avatar">HS</div>
-          <div class="user-text">
-            <div class="user-name">Hardik Singh</div>
-            <div class="user-plan">Premium Member</div>
+        <div class="user-wrap">
+          <button class="user" id="userBtn" aria-expanded="false" aria-haspopup="menu">
+            <div class="avatar" id="userInitials">HS</div>
+            <div class="user-text">
+              <div class="user-name" id="userName">Hardik Singh</div>
+              <div class="user-plan" id="userPlan">Premium Member</div>
+            </div>
+            <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+
+          <div class="user-menu" id="userMenu" role="menu" hidden>
+            <div class="user-menu-head">
+              <div class="user-menu-name" id="menuName">Hardik Singh</div>
+              <div class="user-menu-mail" id="menuEmail">hardikgoku7@gmail.com</div>
+            </div>
+            <button class="user-menu-item" role="menuitem">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+              Profile
+            </button>
+            <button class="user-menu-item" role="menuitem">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-2.9 1.2 2 2 0 11-4 0 1.7 1.7 0 00-2.9-1.2l-.1.1a2 2 0 11-2.8-2.8l.1-.1A1.7 1.7 0 004 15a2 2 0 110-4 1.7 1.7 0 001.2-2.9l-.1-.1A2 2 0 018 5.2l.1.1A1.7 1.7 0 0011 4a2 2 0 114 0 1.7 1.7 0 002.9 1.2l.1-.1a2 2 0 112.8 2.8l-.1.1A1.7 1.7 0 0020 11a2 2 0 110 4z"/></svg>
+              Settings
+            </button>
+            <div class="user-menu-sep"></div>
+            <button class="user-menu-item danger" id="logoutBtn" role="menuitem">
+              <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+              Sign out
+            </button>
           </div>
-          <svg class="caret" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
         </div>
       </div>
     </header>

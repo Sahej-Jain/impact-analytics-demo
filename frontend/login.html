@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sign In · BStackBank</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f172a'/%3E%3Ctext x='16' y='23' font-size='18' font-family='serif' font-weight='700' fill='white' text-anchor='middle'%3E%C4%A6%3C/text%3E%3C/svg%3E" />
+<link rel="stylesheet" href="login.css" />
+<script src="auth.js"></script>
+<script>
+  /* Already signed in? Skip the form. Runs before paint. */
+  if (window.Auth && Auth.isAuthenticated()) location.replace('index.html');
+</script>
+</head>
+<body>
+
+<div class="login-page">
+  <div class="login-bg"></div>
+
+  <div class="login-center">
+    <div class="login-wrap">
+
+      <!-- brand -->
+      <div class="login-head">
+        <div class="logo-badge"><span class="logo-mark">Ħ</span></div>
+        <h1>BStackBank</h1>
+        <p>Your gateway to financial freedom</p>
+      </div>
+
+      <!-- card -->
+      <div class="login-card">
+        <div class="card-intro">
+          <h2>Welcome back</h2>
+          <p>Choose your preferred sign-in method</p>
+        </div>
+
+        <!-- error banner -->
+        <div class="error-banner" id="errorBanner" role="alert" hidden>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+          <p id="errorText"></p>
+        </div>
+
+        <!-- self heal / percy toggle -->
+        <div class="percy-row">
+          <span class="percy-label">Self Heal / Percy Toggle <span id="percyState">Disabled</span></span>
+          <button type="button" id="percyBtn" class="btn btn-secondary btn-sm">Enable</button>
+        </div>
+
+        <!-- method tabs -->
+        <div class="tablist" role="tablist" id="tablist">
+          <button role="tab" type="button" id="tabEmail" data-tab="email"
+                  aria-selected="true" aria-controls="panelEmail">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+            Email
+          </button>
+          <button role="tab" type="button" id="tabPasscode" data-tab="passcode"
+                  aria-selected="false" aria-controls="panelPasscode">
+            <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+            Passcode
+          </button>
+        </div>
+
+        <!-- EMAIL + PASSWORD -->
+        <div role="tabpanel" id="panelEmail" aria-labelledby="tabEmail">
+          <form id="loginForm" novalidate>
+            <div class="field">
+              <label for="email">Email Address</label>
+              <input id="email" name="email" type="email" required autocomplete="username"
+                     autocapitalize="off" spellcheck="false" />
+            </div>
+            <div class="field">
+              <label for="password">Password</label>
+              <div class="pw-wrap">
+                <input id="password" name="password" type="password" required
+                       autocomplete="current-password" />
+                <button type="button" class="pw-toggle" id="pwToggle"
+                        aria-label="Show password" aria-pressed="false">
+                  <svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+              </div>
+            </div>
+            <button type="submit" id="signInBtn" class="btn btn-primary btn-full">
+              <span id="signInLabel">Sign In</span>
+              <svg class="arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- PASSCODE / OTP -->
+        <div role="tabpanel" id="panelPasscode" aria-labelledby="tabPasscode" hidden>
+          <div class="field">
+            <label for="otpEmail">Email Address</label>
+            <input id="otpEmail" name="otpEmail" type="email" required autocomplete="username"
+                   autocapitalize="off" spellcheck="false" />
+          </div>
+          <button type="button" id="sendOtpBtn" class="btn btn-primary btn-full" disabled>
+            Send OTP
+          </button>
+
+          <div id="otpArea" hidden>
+            <div class="otp-note" id="otpNote"></div>
+            <div class="otp-inputs" id="otpInputs">
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 1" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5" />
+              <input type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6" />
+            </div>
+            <button type="button" id="resendOtpBtn" class="link-btn">Resend code</button>
+          </div>
+        </div>
+
+        <div class="login-foot">
+          <p>Don't have an account? <a href="#" id="createAccount">Create account</a></p>
+        </div>
+      </div>
+
+      <!-- demo hint: no backend, so the accepted credentials are stated -->
+      <div class="demo-hint">
+        <strong>Demo credentials</strong>
+        <span>hardikgoku7@gmail.com &nbsp;·&nbsp; sample@123</span>
+        <span>Passcode mode accepts <code>123456</code></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>
